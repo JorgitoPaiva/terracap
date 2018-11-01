@@ -401,10 +401,10 @@ class TerracapExcel  {
         $xls->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Relatório de Chamados Atendidos dentro do TMS INS03 - Meta 95%')
             ->setCellValue('A2', '95% dos Chamados Atendidos')
-            ->setCellValue('A4', 'Total de Tickets Solucionados dentro SLA VIP 22,5M')
+            ->setCellValue('A4', 'Total de Tickets Solucionados Prioridade Baixa')
             ->setCellValue('A5', 'Total de Tickets Solucionados')
             ->setCellValue('A6', 'Indicadores');
-        $xls->getActiveSheet()->setTitle('INS03 VIP 22,5M');
+        $xls->getActiveSheet()->setTitle('INS03 Prioridade Baixa');
         $xls->getActiveSheet()->getStyle('A1:A2')->getFont()->setBold(true);
         $xls->getActiveSheet()->getColumnDimension('A')->setWidth(62);
         $xls->getActiveSheet()->getStyle('A4:B6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
@@ -435,6 +435,8 @@ class TerracapExcel  {
         $xls->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
         $xls->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
         $xls->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
         $xls->getActiveSheet()->setCellValue('A8', 'Nº Ticket')
             ->setCellValue('B8', 'Id')
             ->setCellValue('C8', 'Título')
@@ -458,10 +460,12 @@ class TerracapExcel  {
             ->setCellValue('U8', 'Tempo Aberto em Atendimento')
             ->setCellValue('V8', 'Sla')
             ->setCellValue('W8', 'Tempo Filas Terracap')
-            ->setCellValue('X8', 'Sla Consumido');
-        $xls->getActiveSheet()->getStyle('A8:X8')->getFont()->setBold(true);
-        $xls->getActiveSheet()->getStyle('A8:X8')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-        $xls->getActiveSheet()->getStyle('A8:X8')->getFill()->getStartColor()->setRGB('eaeaea');
+            ->setCellValue('X8', 'Sla Consumido')
+            ->setCellValue('Y8', 'Sla Consumido')
+            ->setCellValue('Z8', 'Sim/Não');
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFont()->setBold(true);
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFill()->getStartColor()->setRGB('eaeaea');
         $xls->getActiveSheet()->getStyle('B4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $xls->getActiveSheet()->getStyle('B5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $xls->getActiveSheet()->getStyle('B6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -481,10 +485,13 @@ class TerracapExcel  {
         $xls->getActiveSheet()->getStyle('W8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $xls->getActiveSheet()->getStyle('X')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $xls->getActiveSheet()->getStyle('X8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $xls->getActiveSheet()->getColumnDimension('Y')->setVisible(FALSE);
+        $xls->getActiveSheet()->getStyle('Y')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Y8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Z')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Z8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
         $rst = $model->rptKPIINS03();
-        $slaIds = array(17);
+        $slaIds = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17);
         $priorityIds = array(2);
 
         $arrayP1 = [];
@@ -496,7 +503,7 @@ class TerracapExcel  {
 
         $i = 9;
         $t = 0;
-        $tempo = (22.5 * 60);
+
         foreach ($arrayP1 as $item) {
             $xls->getActiveSheet()->setCellValueExplicit('A' . $i, $item['ticket'], PHPExcel_Cell_DataType::TYPE_STRING)
                 ->setCellValue('B' . $i, $item['id'])
@@ -519,23 +526,165 @@ class TerracapExcel  {
                 ->setCellValue('S' . $i, $item['user_name_resolucao'])
                 ->setCellValue('T' . $i, $item['tempo_pendente'])
                 ->setCellValue('U' . $i, $item['tempo_atendimento'])
-                ->setCellValue('V' . $i, !empty($item['sla']) || $item['sla'] != NULL ? $item['sla'] : 'SLA Não Informado na Abertura do Chamado')
+                ->setCellValue('V' . $i, !empty($item['sla_id']) || $item['sla_id'] != NULL ? $item['sla_id'] : 'SLA Não Informado na Abertura do Chamado')
                 ->setCellValue('W' . $i, $item['tempo_filas_terracap'])
                 ->setCellValue('X' . $i, FksUtils::calculaTempoTotalAtendimentoTerracapV3($item['tempo_aberto'], $item['tempo_filas_Terracap']))
-                ->setCellValue('Y' . $i, !empty($item['tempo_aberto']) || $item['tempo_aberto'] != NULL ? $t = FksUtils::timeToInt(FksUtils::calculaTempoTotalAtendimentoTerracapV3($item['tempo_aberto'], $item['tempo_filas_terracap'])) : 0);
-            if ($t > $tempo) {
-                $xls->getActiveSheet()->getStyle("A$i:X$i")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('FFDAB9');
-            }
+                ->setCellValue('Y' . $i, !empty($item['tempo_aberto']) || $item['tempo_aberto'] != NULL ? $t = FksUtils::timeToInt(FksUtils::calculaTempoTotalAtendimentoTerracapV3($item['tempo_aberto'], $item['tempo_filas_terracap'])) : 0)
+                //->setCellValue('Z' . $i, "=IF(AND(V$i=0,Y$i>0),0,IF(Y$i>V$i,1,0))");
+                ->setCellValue('Z' . $i, $t <= $item['sla_id'] ? 0 : 1);
             $i++;
         }
         ($i != 9 ? $i-- : $i);
 
         $xls->getActiveSheet()->getStyle("O9:O$i")->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME8);
-        $xls->getActiveSheet()->setCellValue('B4', '=COUNTIF(Y9:Y'.$i.',"<='.$tempo.'")');
+        $xls->getActiveSheet()->setCellValue('B4', '=COUNTIF(Z9:Z'.$i.',"=0")');
         $xls->getActiveSheet()->setCellValue("B5", '=COUNTIF(B9:B'.$i.',">0")');
         $xls->getActiveSheet()->getStyle('B6')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00);
         $xls->getActiveSheet()->setCellValue("B6", "=IF(B4,B4/B5,0)");
 
+        $xls->createSheet(1);
+        $xls->setActiveSheetIndex(1)
+            ->setCellValue('A1', 'Relatório de Chamados Atendidos dentro do TMS INS03 - Meta 95%')
+            ->setCellValue('A2', '95% dos Chamados Atendidos')
+            ->setCellValue('A4', 'Total de Tickets Solucionados Prioridade Média')
+            ->setCellValue('A5', 'Total de Tickets Solucionados')
+            ->setCellValue('A6', 'Indicadores');
+        $xls->getActiveSheet()->setTitle('INS03 Prioridade Média');
+        $xls->getActiveSheet()->getStyle('A1:A2')->getFont()->setBold(true);
+        $xls->getActiveSheet()->getColumnDimension('A')->setWidth(62);
+        $xls->getActiveSheet()->getStyle('A4:B6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $xls->getActiveSheet()->getStyle('A4:B6')->getFill()->getStartColor()->setRGB('eaeaea');
+        $xls->getActiveSheet()->getStyle('A4:B6')->getFont()->setBold(true);
+        $xls->getActiveSheet()->getSheetView()->setZoomScale(80);
+
+        $xls->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+        $xls->getActiveSheet()->getColumnDimension('C')->setWidth(85);
+        $xls->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('G')->setWidth(80);
+        $xls->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
+        $xls->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
+        $xls->getActiveSheet()->setCellValue('A8', 'Nº Ticket')
+            ->setCellValue('B8', 'Id')
+            ->setCellValue('C8', 'Título')
+            ->setCellValue('D8', 'Tipo')
+            ->setCellValue('E8', 'Prioridade')
+            ->setCellValue('F8', 'Serviço')
+            ->setCellValue('G8', 'Solicitante')
+            ->setCellValue('H8', 'Status')
+            ->setCellValue('I8', 'Data de Criação')
+            ->setCellValue('J8', 'Fila de Criação')
+            ->setCellValue('K8', 'Primeiro Proprietário')
+            ->setCellValue('L8', 'Data Primeiro Proprietário')
+            ->setCellValue('M8', 'Fila Primeiro Proprietário')
+            ->setCellValue('N8', 'Data Primeira Fila')
+            ->setCellValue('O8', 'Primeira Fila')
+            ->setCellValue('P8', 'Atendente Primeira Fila')
+            ->setCellValue('Q8', 'Data Resolução')
+            ->setCellValue('R8', 'Fila Resolução')
+            ->setCellValue('S8', 'Atendente Resolução')
+            ->setCellValue('T8', 'Tempo Pendente')
+            ->setCellValue('U8', 'Tempo Aberto em Atendimento')
+            ->setCellValue('V8', 'Sla')
+            ->setCellValue('W8', 'Tempo Filas Terracap')
+            ->setCellValue('X8', 'Sla Consumido')
+            ->setCellValue('Y8', 'Sla Consumido')
+            ->setCellValue('Z8', 'Sim/Não');
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFont()->setBold(true);
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+        $xls->getActiveSheet()->getStyle('A8:Z8')->getFill()->getStartColor()->setRGB('eaeaea');
+        $xls->getActiveSheet()->getStyle('B4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('B5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('B6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Q')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Q8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('R')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('R8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('S')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('S8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('T')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('T8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('U')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('U8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('V')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('V8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('W')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('W8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('X')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('X8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Y')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Y8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Z')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $xls->getActiveSheet()->getStyle('Z8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        $slaIds = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17);
+        $priorityIds = array(3);
+
+        $arrayP2 = [];
+        foreach ($rst as $valueP1) {
+            if (in_array($valueP1['sla_id'], $slaIds) && in_array($valueP1['ticket_priority_id'], $priorityIds)) {
+                $arrayP2[] = $valueP1;
+            }
+        }
+
+        $i = 9;
+        $t = 0;
+
+        foreach ($arrayP2 as $item) {
+            $xls->getActiveSheet()->setCellValueExplicit('A' . $i, $item['ticket'], PHPExcel_Cell_DataType::TYPE_STRING)
+                ->setCellValue('B' . $i, $item['id'])
+                ->setCellValue('C' . $i, $item['titulo'])
+                ->setCellValue('D' . $i, $item['tipo'])
+                ->setCellValue('E' . $i, $item['prioridade'])
+                ->setCellValue('F' . $i, !empty($item['servico']) || $item['servico'] != NULL ? $item['servico'] : 'Serviço Não Informado na Abertura do Chamado')
+                ->setCellValue('G' . $i, $item['solicitante'])
+                ->setCellValue('H' . $i, $item['status'])
+                ->setCellValue('I' . $i, $item['data_criacao'])
+                ->setCellValue('J' . $i, $item['fila_criacao'])
+                ->setCellValue('K' . $i, $item['user_name_first_owner'])
+                ->setCellValue('L' . $i, $item['data_first_owner'])
+                ->setCellValue('M' . $i, $item['queue_name_first_owner'])
+                ->setCellValue('N' . $i, $item['data_first_queue'])
+                ->setCellValue('O' . $i, $item['first_queue_name'])
+                ->setCellValue('P' . $i, $item['user_name_first_queue'])
+                ->setCellValue('Q' . $i, $item['data_resolucao'])
+                ->setCellValue('R' . $i, $item['queue_name_resolucao'])
+                ->setCellValue('S' . $i, $item['user_name_resolucao'])
+                ->setCellValue('T' . $i, $item['tempo_pendente'])
+                ->setCellValue('U' . $i, $item['tempo_atendimento'])
+                ->setCellValue('V' . $i, !empty($item['sla_id']) || $item['sla_id'] != NULL ? $item['sla_id'] : 'SLA Não Informado na Abertura do Chamado')
+                ->setCellValue('W' . $i, $item['tempo_filas_terracap'])
+                ->setCellValue('X' . $i, FksUtils::calculaTempoTotalAtendimentoTerracapV3($item['tempo_aberto'], $item['tempo_filas_Terracap']))
+                ->setCellValue('Y' . $i, !empty($item['tempo_aberto']) || $item['tempo_aberto'] != NULL ? $t = FksUtils::timeToInt(FksUtils::calculaTempoTotalAtendimentoTerracapV3($item['tempo_aberto'], $item['tempo_filas_terracap'])) : 0)
+                //->setCellValue('Z' . $i, "=IF(AND(V$i=0,Y$i>0),0,IF(Y$i>V$i,1,0))");
+                ->setCellValue('Z' . $i, $t <= $item['sla_id'] ? 0 : 1);
+            $i++;
+        }
+        ($i != 9 ? $i-- : $i);
+
+        $xls->getActiveSheet()->getStyle("O9:O$i")->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME8);
+        $xls->getActiveSheet()->setCellValue('B4', '=COUNTIF(Z9:Z'.$i.',"=0")');
+        $xls->getActiveSheet()->setCellValue("B5", '=COUNTIF(B9:B'.$i.',">0")');
+        $xls->getActiveSheet()->getStyle('B6')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00);
+        $xls->getActiveSheet()->setCellValue("B6", "=IF(B4,B4/B5,0)");
 
         // END
         $xls->setActiveSheetIndex(0);

@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992d8371-b1cf-48ed-a209-fcc7a4f94b15" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/fontes/assets/TerracapreportINS02.xlsx" afterPath="$PROJECT_DIR$/fontes/assets/TerracapreportINS02.xlsx" />
-      <change beforePath="$PROJECT_DIR$/fontes/protected/components/FksUtils.php" afterPath="$PROJECT_DIR$/fontes/protected/components/FksUtils.php" />
+      <change beforePath="$PROJECT_DIR$/fontes/assets/reportINS03.xlsx" afterPath="$PROJECT_DIR$/fontes/assets/reportINS03.xlsx" />
       <change beforePath="$PROJECT_DIR$/fontes/protected/components/TerracapExcel.php" afterPath="$PROJECT_DIR$/fontes/protected/components/TerracapExcel.php" />
-      <change beforePath="$PROJECT_DIR$/fontes/protected/models/KpiTerracap.php" afterPath="$PROJECT_DIR$/fontes/protected/models/KpiTerracap.php" />
       <change beforePath="$PROJECT_DIR$/fontes/protected/runtime/application.log" afterPath="$PROJECT_DIR$/fontes/protected/runtime/application.log" />
     </list>
     <ignored path="DashOTRS.iws" />
@@ -36,8 +34,8 @@
       <file leaf-file-name="AncineExcel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fontes/protected/components/AncineExcel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="701" column="87" lean-forward="false" selection-start-line="701" selection-start-column="51" selection-end-line="701" selection-end-column="87" />
+            <state relative-caret-position="204">
+              <caret line="715" column="29" lean-forward="true" selection-start-line="715" selection-start-column="8" selection-end-line="715" selection-end-column="29" />
               <folding>
                 <element signature="n#generateXlsINS02#0;n#AncineExcel#0;n#!!top" expanded="false" />
                 <element signature="n#generateXlsINS07#0;n#AncineExcel#0;n#!!top" expanded="false" />
@@ -60,8 +58,8 @@
       <file leaf-file-name="KpiAncine.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fontes/protected/models/KpiAncine.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="120" selection-end-column="5" />
+            <state relative-caret-position="417">
+              <caret line="116" column="38" lean-forward="false" selection-start-line="116" selection-start-column="19" selection-end-line="116" selection-end-column="38" />
               <folding>
                 <marker date="1534164033452" expanded="true" signature="19546:20234" ph="SELECT th.id... ticket_history" />
                 <marker date="1534164033452" expanded="true" signature="19877:20182" ph="SELECT MIN(t... ticket_history" />
@@ -73,8 +71,8 @@
       <file leaf-file-name="TerracapExcel.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fontes/protected/components/TerracapExcel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="530" column="30" lean-forward="true" selection-start-line="530" selection-start-column="30" selection-end-line="530" selection-end-column="30" />
+            <state relative-caret-position="1858">
+              <caret line="640" column="16" lean-forward="false" selection-start-line="640" selection-start-column="8" selection-end-line="640" selection-end-column="16" />
               <folding>
                 <element signature="n#generateXlsINS02#0;n#TerracapExcel#0;n#!!top" expanded="false" />
                 <element signature="n#generateXlsINS07#0;n#TerracapExcel#0;n#!!top" expanded="false" />
@@ -87,8 +85,8 @@
       <file leaf-file-name="KpiTerracap.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fontes/protected/models/KpiTerracap.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="101" column="7" lean-forward="false" selection-start-line="101" selection-start-column="7" selection-end-line="101" selection-end-column="7" />
+            <state relative-caret-position="213">
+              <caret line="85" column="120" lean-forward="false" selection-start-line="85" selection-start-column="114" selection-end-line="85" selection-end-column="120" />
               <folding>
                 <marker date="1541076467981" expanded="true" signature="20861:21549" ph="SELECT th.id... ticket_history" />
                 <marker date="1541076467981" expanded="true" signature="21192:21497" ph="SELECT MIN(t... ticket_history" />
@@ -118,7 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>first_queue_name</find>
       <find>rptKPIINS07</find>
       <find>funarte</find>
       <find>Funarte</find>
@@ -148,6 +145,7 @@
       <find>rptKPIINS0405</find>
       <find>calculaTempoTotalAtendimentoTerracapV3</find>
       <find>calculaTempoTotalAtendimentoAncineV3</find>
+      <find>sla_id</find>
     </findStrings>
     <replaceStrings>
       <replace>$i,</replace>
@@ -314,7 +312,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../iphan" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -644,12 +642,12 @@
       <workItem from="1539183478373" duration="38000" />
       <workItem from="1539785051966" duration="4121000" />
       <workItem from="1540224493921" duration="6984000" />
-      <workItem from="1541005196688" duration="9112000" />
+      <workItem from="1541005196688" duration="14093000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1308839000" />
+    <option name="totallyTimeSpent" value="1313820000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1070,26 +1068,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fontes/protected/controllers/ReportController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="353" column="49" lean-forward="false" selection-start-line="353" selection-start-column="49" selection-end-line="353" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fontes/protected/components/AncineExcel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="701" column="87" lean-forward="false" selection-start-line="701" selection-start-column="51" selection-end-line="701" selection-end-column="87" />
-          <folding>
-            <element signature="n#generateXlsINS02#0;n#AncineExcel#0;n#!!top" expanded="false" />
-            <element signature="n#generateXlsINS07#0;n#AncineExcel#0;n#!!top" expanded="false" />
-            <element signature="n#generateXlsINSGeral#0;n#AncineExcel#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fontes/protected/components/FksUtils.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -1100,8 +1078,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fontes/protected/models/KpiAncine.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="120" selection-end-column="5" />
+        <state relative-caret-position="417">
+          <caret line="116" column="38" lean-forward="false" selection-start-line="116" selection-start-column="19" selection-end-line="116" selection-end-column="38" />
           <folding>
             <marker date="1534164033452" expanded="true" signature="19546:20234" ph="SELECT th.id... ticket_history" />
             <marker date="1534164033452" expanded="true" signature="19877:20182" ph="SELECT MIN(t... ticket_history" />
@@ -1111,8 +1089,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fontes/protected/models/KpiTerracap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="101" column="7" lean-forward="false" selection-start-line="101" selection-start-column="7" selection-end-line="101" selection-end-column="7" />
+        <state relative-caret-position="213">
+          <caret line="85" column="120" lean-forward="false" selection-start-line="85" selection-start-column="114" selection-end-line="85" selection-end-column="120" />
           <folding>
             <marker date="1541076467981" expanded="true" signature="20861:21549" ph="SELECT th.id... ticket_history" />
             <marker date="1541076467981" expanded="true" signature="21192:21497" ph="SELECT MIN(t... ticket_history" />
@@ -1120,10 +1098,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fontes/protected/controllers/ReportController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="353" column="49" lean-forward="false" selection-start-line="353" selection-start-column="49" selection-end-line="353" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fontes/protected/components/AncineExcel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="715" column="29" lean-forward="true" selection-start-line="715" selection-start-column="8" selection-end-line="715" selection-end-column="29" />
+          <folding>
+            <element signature="n#generateXlsINS02#0;n#AncineExcel#0;n#!!top" expanded="false" />
+            <element signature="n#generateXlsINS07#0;n#AncineExcel#0;n#!!top" expanded="false" />
+            <element signature="n#generateXlsINSGeral#0;n#AncineExcel#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fontes/protected/components/TerracapExcel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="530" column="30" lean-forward="true" selection-start-line="530" selection-start-column="30" selection-end-line="530" selection-end-column="30" />
+        <state relative-caret-position="1858">
+          <caret line="640" column="16" lean-forward="false" selection-start-line="640" selection-start-column="8" selection-end-line="640" selection-end-column="16" />
           <folding>
             <element signature="n#generateXlsINS02#0;n#TerracapExcel#0;n#!!top" expanded="false" />
             <element signature="n#generateXlsINS07#0;n#TerracapExcel#0;n#!!top" expanded="false" />
